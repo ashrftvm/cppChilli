@@ -112,15 +112,40 @@ void Game::UpdateModel()
 	shapeIsChanged = true;
 
 	if (x > 200 && x < 300) {
-		shapeIsChanged = false;
-		gb = 0;
+		//shapeIsChanged = false;
+		gb = 155;
 	}
 	else {
+		//shapeIsChanged = true;
 		gb = 255;
 	}
 
 	if (wnd.kbd.KeyIsPressed(VK_CONTROL)) {
 		gb = 0;
+	}
+
+	const int mobile_left = x - 5;
+	const int mobile_right = x + 5;
+	const int mobile_up = y - 5;
+	const int mobile_down = y + 5;
+
+	const int fixed_left = x_fixed - 5;
+	const int fixed_right = x_fixed + 5;
+	const int fixed_up = y_fixed - 5;
+	const int fixed_bottom = y_fixed + 5;
+
+	if (mobile_left < fixed_right &&
+		mobile_right > fixed_left &&
+		mobile_up < fixed_bottom &&
+		mobile_down > fixed_up) {
+		colliding = true;
+		shapeIsChanged = true;
+		gb = 0;
+	}
+	else {
+		colliding = false;
+		shapeIsChanged = false;
+		//gb = 255;
 	}
 
 	//shapeIsChanged = wnd.kbd.KeyIsPressed(VK_SHIFT);
@@ -130,7 +155,28 @@ void Game::UpdateModel()
 void Game::ComposeFrame()
 {
 
-	if (shapeIsChanged)
+	gfx.PutPixel(-5 + x_fixed, -5 + y_fixed, 0,255,255);
+	gfx.PutPixel(-5 + x_fixed, -4 + y_fixed, 0,255,255);
+	gfx.PutPixel(-5 + x_fixed, -3 + y_fixed, 0,255,255);
+	gfx.PutPixel(-4 + x_fixed, -5 + y_fixed, 0,255,255);
+	gfx.PutPixel(-3 + x_fixed, -5 + y_fixed, 0,255,255);
+	gfx.PutPixel(-5 + x_fixed, 5 +  y_fixed, 0,255,255);
+	gfx.PutPixel(-5 + x_fixed, 4 +  y_fixed, 0,255,255);
+	gfx.PutPixel(-5 + x_fixed, 3 +  y_fixed, 0,255,255);
+	gfx.PutPixel(-4 + x_fixed, 5 +  y_fixed, 0,255,255);
+	gfx.PutPixel(-3 + x_fixed, 5 +  y_fixed, 0,255,255);
+	gfx.PutPixel(5 +  x_fixed, -5 + y_fixed, 0,255,255);
+	gfx.PutPixel(5 +  x_fixed, -4 + y_fixed, 0,255,255);
+	gfx.PutPixel(5 +  x_fixed, -3 + y_fixed, 0,255,255);
+	gfx.PutPixel(4 +  x_fixed, -5 + y_fixed, 0,255,255);
+	gfx.PutPixel(3 +  x_fixed, -5 + y_fixed, 0,255,255);
+	gfx.PutPixel(5 +  x_fixed, 5 +  y_fixed, 0,255,255);
+	gfx.PutPixel(5 +  x_fixed, 4 +  y_fixed, 0,255,255);
+	gfx.PutPixel(5 +  x_fixed, 3 +  y_fixed, 0,255,255);
+	gfx.PutPixel(4 +  x_fixed, 5 +  y_fixed, 0,255,255);
+	gfx.PutPixel(3 +  x_fixed, 5 +  y_fixed, 0,255,255);
+
+	if (shapeIsChanged || colliding)
 	{
 		gfx.PutPixel(-5 + x, -5 + y, 255, gb, gb);
 		gfx.PutPixel(-5 + x, -4 + y, 255, gb, gb);

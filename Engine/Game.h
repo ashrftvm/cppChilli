@@ -47,6 +47,9 @@ private:
     int x = 400;
     int y = 300;
 
+    const int x_fixed = 350;
+    const int y_fixed = 400;
+
     int vx = 0;
     int vy = 0;
 
@@ -57,4 +60,6 @@ private:
     bool inhibitDown = false;
     bool inhibitRight = false;
     bool inhibitLeft = false;
+
+    bool colliding = false;
 };
