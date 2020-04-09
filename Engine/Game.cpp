@@ -1,5 +1,5 @@
-/****************************************************************************************** 
- *	Chili DirectX Framework Version 16.07.20											  *	
+/******************************************************************************************
+ *	Chili DirectX Framework Version 16.07.20											  *
  *	Game.cpp																			  *
  *	Copyright 2016 PlanetChili.net <http://www.planetchili.net>							  *
  *																						  *
@@ -21,16 +21,16 @@
 #include "MainWindow.h"
 #include "Game.h"
 
-Game::Game( MainWindow& wnd )
+Game::Game(MainWindow& wnd)
 	:
-	wnd( wnd ),
-	gfx( wnd )
+	wnd(wnd),
+	gfx(wnd)
 {
 }
 
 void Game::Go()
 {
-	gfx.BeginFrame();	
+	gfx.BeginFrame();
 	UpdateModel();
 	ComposeFrame();
 	gfx.EndFrame();
@@ -38,34 +38,70 @@ void Game::Go()
 
 void Game::UpdateModel()
 {
-}
+	if (wnd.kbd.KeyIsPressed(VK_UP)) {
+		if (inhibitUp) {
+		}
+		else {
+			vy = vy - 1;
+			inhibitUp = true;
+		}
+	}
+	else {
+		inhibitUp = false;
+	}
 
-void Game::ComposeFrame()
-{
-    if (wnd.kbd.KeyIsPressed(VK_UP)) {
-        y = y - 3;
-    }
+	if (wnd.kbd.KeyIsPressed(VK_DOWN)) {
+		if (inhibitDown) {
+		}
+		else {
+			vy = vy + 1;
+			inhibitDown = true;
+		}
+	}
+	else {
+		inhibitDown = false;
+	}
 
-    if (wnd.kbd.KeyIsPressed(VK_DOWN)) {
-        y = y + 3;
-    }
+	if (wnd.kbd.KeyIsPressed(VK_RIGHT)) {
+		if (inhibitRight) {
+		}
+		else {
+			vx = vx + 1;
+			inhibitRight = true;
+		}
+	}
+	else {
+		inhibitRight = false;
+	}
 
-    if (wnd.kbd.KeyIsPressed(VK_RIGHT)) {
-        x = x + 3;
-    }
+	if (wnd.kbd.KeyIsPressed(VK_LEFT)) {
+		if (inhibitLeft) {
+		}
+		else {
+			vx = vx - 1;
+			inhibitLeft = true;
+		}
+	}
+	else {
+		inhibitLeft = false;
+	}
 
-    if (wnd.kbd.KeyIsPressed(VK_LEFT)) {
-        x = x - 3;
-    }
-
-	int gb = 255;
+	x = x + vx;
+	y = y + vy;
 
 	if (wnd.kbd.KeyIsPressed(VK_CONTROL))
 	{
 		gb = 0;
 	}
 
-	if (wnd.kbd.KeyIsPressed(VK_SHIFT))
+	shapeIsChanged = wnd.kbd.KeyIsPressed(VK_SHIFT);
+
+}
+
+void Game::ComposeFrame()
+{
+
+	if (shapeIsChanged)
 	{
 		gfx.PutPixel(-5 + x, -5 + y, 255, gb, gb);
 		gfx.PutPixel(-5 + x, -4 + y, 255, gb, gb);
@@ -103,5 +139,5 @@ void Game::ComposeFrame()
 		gfx.PutPixel(x, 4 + y, 255, gb, gb);
 		gfx.PutPixel(x, 5 + y, 255, gb, gb);
 	}
-    
+
 }
