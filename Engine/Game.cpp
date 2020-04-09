@@ -89,12 +89,41 @@ void Game::UpdateModel()
 	x = x + vx;
 	y = y + vy;
 
-	if (wnd.kbd.KeyIsPressed(VK_CONTROL))
-	{
+	if (x + 5 >= gfx.ScreenWidth) {
+		x = gfx.ScreenWidth - 6;
+		vx = 0;
+	}
+
+	if (x - 5 <= 0) {
+		x = x + 5;
+		vx = 0;
+	}
+
+	if (y + 5 >= gfx.ScreenHeight) {
+		y = gfx.ScreenHeight - 6;
+		vy = 0;
+	}
+
+	if (y - 5 <= 0) {
+		y = y + 5;
+		vy = 0;
+	}
+
+	shapeIsChanged = true;
+
+	if (x > 200 && x < 300) {
+		shapeIsChanged = false;
+		gb = 0;
+	}
+	else {
+		gb = 255;
+	}
+
+	if (wnd.kbd.KeyIsPressed(VK_CONTROL)) {
 		gb = 0;
 	}
 
-	shapeIsChanged = wnd.kbd.KeyIsPressed(VK_SHIFT);
+	//shapeIsChanged = wnd.kbd.KeyIsPressed(VK_SHIFT);
 
 }
 
